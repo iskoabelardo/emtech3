@@ -1,11 +1,48 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import LoginScreen from './components/LoginScreen';
+import SignupScreen from './components/SignupScreen';
+
+const Stack = createStackNavigator();
 
 export default function App() {
   return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Project Name" component={HomeScreen} />
+        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Signup" component={SignupScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+
+function HomeScreen({ navigation }) {
+  return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <View style={styles.homepage}>
+        <Text> Tulong.ph </Text>
+      </View>
+      <TouchableOpacity
+        style={styles.buttonContainer}
+        onPress={() => navigation.navigate('Login')}
+      >
+        <View style={styles.loginButton}>
+          <Text style={styles.buttonText}>Login</Text>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.buttonContainer} onPress={() => navigation.navigate('Signup')}>
+        <View style={styles.signupButton}>
+          <Text style={styles.buttonText}>Signup</Text>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.guestButton} onPress={("")}>
+        <Text style={{ fontWeight: 'bold', color: 'black' }}>
+          Guest Sign In
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -13,8 +50,37 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: 'white',
+    justifyContent: 'flex-end',
+  },
+  homepage: {
     alignItems: 'center',
-    justifyContent: 'center',
+    marginVertical: 200,
+  },
+  buttonContainer: {
+    margin: 4,
+    alignSelf: 'center',
+    width: "75%"
+  },
+  loginButton: {
+    backgroundColor: '#78D6C6',
+    borderRadius: 10,
+    padding: 15,
+    alignItems: 'center',
+  },
+  signupButton: {
+    backgroundColor: 'black',
+    borderRadius: 10,
+    padding: 15,
+    alignItems: 'center',
+  },
+  buttonText: {
+    fontWeight: 'bold',
+    color: 'white'
+  },
+  guestButton: {
+    alignItems: 'center',
+    marginTop: 25,
+    marginBottom: 25
   },
 });
